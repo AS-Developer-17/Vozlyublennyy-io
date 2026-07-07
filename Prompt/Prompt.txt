@@ -1,0 +1,96 @@
+This project "возлюбленный.IO" is relationship advicer app that uses Gemini Backend("AQ.Ab8RN6LN2duEstHGqUfRQVAoueCAt_2bUdRyDhH63WTdUT9KQw" and "AQ.Ab8RN6JnSShQrJ7-A_3sO1NdMBsay-LO6_5YDdhnu1K-knvmgA")(Use one for Quiz and Test Generation and one for Chats and Content Generation)(This folder will be uploaded to github so secure them) and for frontend use white background and pink foreground with hover effects and responsive nature.
+
+Header: write project name in heading on left and add three options on left (Home,LoveCalculator,Chat)
+
+Welcome Component("This is the Homepage of the program")
+
+!!!1St Section
+Use the image("Banner") in assets
+then
+use Heading to great the user based on the current timing of Good (Morning, Evening, Night)
+then write the line"How would you like to express your love today"
+then generate three love quotes
+
+!!!2nd Section
+Use a 3 column grid to display the following sub programs(Build them using their descriptions) of the project using the react router dom:
+💞
+Love Calculator
+Calculate your love compatibility with anyone and discover your relationship potential
+
+💘
+Crush Calculator
+Find out if your crush likes you back with our special compatibility calculator
+
+✨
+FLAMES Game
+Discover your relationship status with a fun game that reveals your connection
+
+💭
+Does My Crush Like Me?
+Take our fun quiz to discover if your crush has feelings for you
+
+💌
+Love Quotes
+Get inspired with beautiful love quotes that express the feelings words often can't
+
+💑
+Couple Nickname Generator
+Create unique and cute couple names by combining your names together
+
+💝
+Love Message Generator
+Generate romantic messages, pickup lines, and proposal texts instantly
+
+🎭
+Date Ideas Generator
+Get creative and romantic date ideas perfect for any occasion or budget
+
+✨
+Chat with Inaya
+Talk through crushes, texting, and relationship questions with your AI friend
+
+💕
+Love Calculator by Name
+Calculate love compatibility based on names using name-matching algorithms Calculators& Reference Tools
+
+📅
+Love Calculator by DOB
+Discover compatibility using birth dates and numerology principles
+
+⭐
+Love Horoscope
+Check zodiac compatibility and discover astrological love insights
+
+🤝
+Friendship Calculator
+Calculate friendship compatibility and discover your bond as friends
+
+📖
+Blog
+Read relationship tips, love advice, and inspiring stories from our community
+
+💗
+Love Languages Guide
+Explore the five love languages and understand how you and your partner express affection
+
+📝
+Love Language Test
+Discover your primary love language and learn how you prefer to give and receive love
+
+🧩
+Love Language Quiz
+Take a quick quiz to find out which love language resonates most with you
+
+💑
+Couples Love Language Test
+Take the love language test together as a couple and strengthen your relationship
+
+!!!3rd Section
+Heading("Love & Relationship Tools in One Place")
+Generate a optimal paragraph on that 
+
+!!!4th Section 
+Generate a FAQ section in Accordion Style
+
+!!!5th Section
+Generate Footer Based on the Prompt
