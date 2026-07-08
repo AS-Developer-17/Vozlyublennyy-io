@@ -49,8 +49,13 @@ export default function Footer() {
         </div>
         
         <div className="footer-bottom">
-          <div>
-            &copy; {new Date().getFullYear()} возлюбленный.IO. Made with <Heart size={14} fill="#ec4899" color="#ec4899" style={{ display: 'inline-block', verticalAlign: 'middle' }} /> for better relationships.
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
+            <div>
+              &copy; {new Date().getFullYear()} возлюбленный.IO. Made with <Heart size={14} fill="#ec4899" color="#ec4899" style={{ display: 'inline-block', verticalAlign: 'middle' }} /> for better relationships.
+            </div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-light)' }}>
+              Developed by <a href="https://as-developerportfolio.web.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>AS.Developer</a>
+            </div>
           </div>
           <div style={{ display: 'flex', gap: '16px', color: 'var(--text-light)', fontSize: '0.85rem' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
