@@ -14,7 +14,7 @@ import NicknameGenerator from './components/tools/NicknameGenerator';
 import LoveMessageGenerator from './components/tools/LoveMessageGenerator';
 import DateIdeas from './components/tools/DateIdeas';
 import ChatNatasha from './components/tools/ChatNatasha';
-import LoveCalculatorName from './components/tools/LoveCalculatorName';
+import NicknameForHimHer from './components/tools/NicknameForHimHer';
 import LoveCalculatorDob from './components/tools/LoveCalculatorDob';
 import LoveHoroscope from './components/tools/LoveHoroscope';
 import FriendshipCalculator from './components/tools/FriendshipCalculator';
@@ -40,7 +40,7 @@ function App() {
           <Route path="/love-message-generator" element={<LoveMessageGenerator />} />
           <Route path="/date-ideas" element={<DateIdeas />} />
           <Route path="/chat-natasha" element={<ChatNatasha />} />
-          <Route path="/love-calculator-name" element={<LoveCalculatorName />} />
+          <Route path="/nickname-for-him-her" element={<NicknameForHimHer />} />
           <Route path="/love-calculator-dob" element={<LoveCalculatorDob />} />
           <Route path="/love-horoscope" element={<LoveHoroscope />} />
           <Route path="/friendship-calculator" element={<FriendshipCalculator />} />
