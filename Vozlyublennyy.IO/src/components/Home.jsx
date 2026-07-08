@@ -36,7 +36,7 @@ export default function Home() {
     { path: '/love-message-generator', emoji: '💝', title: 'Love Message Generator', desc: 'Generate romantic messages, pickup lines, and proposal texts instantly' },
     { path: '/date-ideas', emoji: '🎭', title: 'Date Ideas Generator', desc: 'Get creative and romantic date ideas perfect for any occasion or budget' },
     { path: '/chat-natasha', emoji: '✨', title: 'Chat with Natasha', desc: 'Talk through crushes, texting, and relationship questions with your AI friend' },
-    { path: '/love-calculator-name', emoji: '💕', title: 'Love Calculator by Name', desc: 'Calculate love compatibility based on names using name-matching algorithms' },
+    { path: '/nickname-for-him-her', emoji: '💝', title: 'Nickname for Him/Her', desc: 'Generate 10 sweet, funny, or romantic nicknames for your boyfriend or girlfriend.' },
     { path: '/love-calculator-dob', emoji: '📅', title: 'Love Calculator by DOB', desc: 'Discover compatibility using birth dates and numerology principles' },
     { path: '/love-horoscope', emoji: '⭐', title: 'Love Horoscope', desc: 'Check zodiac compatibility and discover astrological love insights' },
     { path: '/friendship-calculator', emoji: '🤝', title: 'Friendship Calculator', desc: 'Calculate friendship compatibility and discover your bond as friends' },
