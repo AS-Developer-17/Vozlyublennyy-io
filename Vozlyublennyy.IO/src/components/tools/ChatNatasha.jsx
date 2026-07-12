@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Send, Sparkles, User, Heart } from 'lucide-react';
 import { chatWithNatasha } from '../../services/gemini';
@@ -35,7 +35,7 @@ export default function ChatNatasha() {
       // Send message history + new message to Gemini
       const response = await chatWithNatasha(messages, userMsg);
       setMessages(prev => [...prev, { sender: 'assistant', text: response }]);
-    } catch (err) {
+    } catch {
       setMessages(prev => [...prev, { 
         sender: 'assistant', 
         text: "I experienced a little trouble hearing you, but I'm still here. Could you repeat that? 🌸" 
