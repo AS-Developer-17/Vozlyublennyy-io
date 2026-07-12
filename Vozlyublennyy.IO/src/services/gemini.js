@@ -17,48 +17,62 @@ export const askGemini = async (prompt, type = 'chat') => {
     throw new Error(`API key configuration missing. Please verify your environment variables.`);
   }
 
-  // Use gemini-2.5-flash as it is highly efficient and compatible
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+  // List of models to try in priority order.
+  // gemini-3.1-flash-lite is currently the most stable and quota-friendly model available.
+  const models = [
+    'gemini-3.1-flash-lite',
+    'gemini-3.5-flash',
+    'gemini-2.5-flash'
+  ];
 
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [{ text: prompt }]
+  let lastError = null;
+
+  for (const model of models) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: prompt }]
+            }
+          ],
+          generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 1024,
           }
-        ],
-        generationConfig: {
-          temperature: 0.7,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 1024,
-        }
-      })
-    });
+        })
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error("Gemini API error status:", response.status, errorData);
-      throw new Error(errorData.error?.message || `Gemini API responded with status ${response.status}`);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.warn(`Gemini API error with model ${model}: status ${response.status}`, errorData);
+        lastError = new Error(errorData.error?.message || `Gemini API responded with status ${response.status}`);
+        continue;
+      }
+
+      const data = await response.json();
+      const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      
+      if (!generatedText) {
+        lastError = new Error(`Empty response received from model ${model}.`);
+        continue;
+      }
+
+      return generatedText;
+    } catch (error) {
+      console.error(`Error in askGemini with model ${model}:`, error);
+      lastError = error;
     }
-
-    const data = await response.json();
-    const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    
-    if (!generatedText) {
-      throw new Error("Empty response received from AI model.");
-    }
-
-    return generatedText;
-  } catch (error) {
-    console.error("Error in askGemini:", error);
-    throw error;
   }
+
+  throw lastError || new Error("All attempts to call Gemini API failed.");
 };
 
 /**
@@ -112,7 +126,7 @@ Ensure the response is valid JSON and only valid JSON. Do not write any conversa
       analysis: "It seems like there's a connection, but some signals might be crossed. Take things step-by-step and pay attention to how they interact with you one-on-one.",
       tips: ["Try initiating a low-pressure conversation", "Observe their body language when you walk into the room", "Suggest hanging out in a group first"]
     });
-  } catch (err) {
+  } catch {
     // Mock fallback
     return {
       score: Math.floor(Math.random() * 40) + 40,
@@ -143,7 +157,7 @@ Natasha:`;
 
   try {
     return await askGemini(prompt, 'chat');
-  } catch (err) {
+  } catch {
     return "I'm so sorry, I had a little hiccup connecting to my thoughts. But I'm here for you! Tell me more about what's on your mind, and let's work through it together. 💕";
   }
 };
@@ -199,7 +213,7 @@ Return ONLY the quote itself inside quotes, followed by a new line and the autho
 
   try {
     return await askGemini(prompt, 'chat');
-  } catch (err) {
+  } catch {
     const list = defaults[category] || defaults.romantic;
     const randomIndex = Math.floor(Math.random() * list.length);
     return list[randomIndex];
@@ -255,7 +269,7 @@ Ensure the response is valid JSON and only valid JSON.`;
       ...item,
       nickname: toSentenceCase(item.nickname)
     }));
-  } catch (err) {
+  } catch {
     return getProceduralNicknames(name1, name2).map(item => ({
       ...item,
       nickname: toSentenceCase(item.nickname)
@@ -323,7 +337,7 @@ Ensure the response is valid JSON and only valid JSON.`;
       ...item,
       nickname: toSentenceCase(item.nickname)
     }));
-  } catch (err) {
+  } catch {
     return getProceduralHimHerNicknames(name, gender).map(item => ({
       ...item,
       nickname: toSentenceCase(item.nickname)
@@ -338,7 +352,6 @@ const getProceduralHimHerNicknames = (name, gender) => {
   // Syllable helper logic to build real affectionate variations
   const short3 = n.substring(0, 3);
   const short4 = n.length >= 4 ? n.substring(0, 4) : n;
-  const short2 = n.substring(0, 2);
   
   const endings = lowerGender === 'him'
     ? ['u', 'y', 'ie', 'oo', 'z', 's']
@@ -350,7 +363,6 @@ const getProceduralHimHerNicknames = (name, gender) => {
   const dim4 = `${short4}${endings[4] || 's'}`; // e.g. Rohz, Shreiya, Akshiya
   const dim5 = n.length > 3 ? n.substring(n.length - 3) : n; // e.g. "han", "eya", "ita" (Ita!)
   const dim6 = n.length > 4 ? n.substring(n.length - 4) : n; // e.g. "ohan", "reya", "kita" (Kita!)
-  const dim7 = `${short2}y`; // e.g. Roy, Shry, Aky
   const dim8 = `${short4}`; // e.g. Roh, Shrey, Aksh (Aksh!)
   
   const terms = lowerGender === 'him'
@@ -395,7 +407,7 @@ Return ONLY valid JSON.`;
       text: `Every day I spend with you becomes my new favorite day. You have this beautiful way of bringing light into my world, and I just wanted to remind you how much you mean to me.`,
       advice: "Send this unexpectedly during their lunch break to brighten their day!"
     });
-  } catch (err) {
+  } catch {
     return {
       title: "Heartfelt Message",
       text: `Just wanted to send a little reminder that you are on my mind and in my heart. Thank you for being the amazing person you are.`,
@@ -574,7 +586,7 @@ Return ONLY valid JSON.`;
       challenges: ["Differing emotional speeds"],
       forecast: "Your stars indicate a strong, healthy foundation. If you navigate challenges with openness, this bond will stand the test of time."
     });
-  } catch (err) {
+  } catch {
     return {
       percentage: 78,
       verdict: "Celestial Harmony",
@@ -617,7 +629,7 @@ Ensure all breakdown percentages sum up to 100. Return ONLY valid JSON.`;
       breakdown: { "Words of Affirmation": 20, "Quality Time": 40, "Receiving Gifts": 10, "Acts of Service": 15, "Physical Touch": 15 },
       actionableTips: ["Schedule regular device-free date nights", "Share walks together to converse about your days"]
     });
-  } catch (err) {
+  } catch {
     return {
       primary: "Words of Affirmation",
       explanation: "For you, words carry immense weight and beauty. Hearing 'I love you', receiving handwritten notes, and verbal appreciation make you feel truly seen and secure in your bond.",
@@ -657,7 +669,7 @@ Ensure the response is valid JSON and only valid JSON.`;
       frictionAnalysis: "You might experience minor blocks if one expects verbal validation while the other shows love by completing practical tasks.",
       tips: ["Practice speaking words of appreciation regularly", "Ensure date nights are focused and device-free"]
     });
-  } catch (err) {
+  } catch {
     return {
       harmonyIndex: 75,
       summary: "Complementary Connection",
